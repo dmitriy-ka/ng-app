@@ -1,3 +1,4 @@
+import { NgxTourService } from './ngx-tour/ngx-tour.service';
 import { Component } from '@angular/core';
 
 @Component({
@@ -7,4 +8,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'ng-app';
+
+  constructor(private tourService: NgxTourService) {}
+
+  showTour() {
+    this.tourService.startTour('showTour');
+  }
 }
