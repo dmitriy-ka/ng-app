@@ -15,17 +15,13 @@
     <ng-template #componentStep></ng-template>
   </div>
   <div class="modal-footer">
-    <button *ngIf="isPrevBtnShown" class="btn btn-secondary" (click)="onPrev()">
+    <button class="btn btn-secondary" (click)="onPrev()">
       Prev
     </button>
-    <button *ngIf="isNextBtnShown" class="btn btn-secondary" (click)="onNext()">
+    <button class="btn btn-secondary" (click)="onNext()">
       Next
     </button>
-    <button
-      *ngIf="isFinishBtnShown"
-      class="btn btn-primary"
-      (click)="onFinish()"
-    >
+    <button class="btn btn-primary" (click)="onFinish()">
       Finish
     </button>
   </div>

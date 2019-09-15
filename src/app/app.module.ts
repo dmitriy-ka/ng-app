@@ -1,5 +1,5 @@
+import { GuidesModule } from './guides/guides.module';
 import { AppService } from './app.service';
-import { NgxTourModule } from './ngx-tour/ngx-tour.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -8,7 +8,7 @@ import { AppComponent } from './app.component';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, AppRoutingModule, NgxTourModule],
+  imports: [BrowserModule, AppRoutingModule, GuidesModule],
   providers: [AppService],
   bootstrap: [AppComponent]
 })

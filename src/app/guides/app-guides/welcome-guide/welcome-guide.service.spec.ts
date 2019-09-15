@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { NgxTourService } from './ngx-tour.service';
+import { WelcomeGuideService } from './welcome-guide.service';
 
-describe('NgxTourService', () => {
+describe('WelcomeGuideService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: NgxTourService = TestBed.get(NgxTourService);
+    const service: WelcomeGuideService = TestBed.get(WelcomeGuideService);
     expect(service).toBeTruthy();
   });
 });

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NgxTourStepComponent } from './ngx-tour-step.component';
+import { GuideStepComponent } from './guide-step.component';
 
-describe('NgxTourStepComponent', () => {
-  let component: NgxTourStepComponent;
-  let fixture: ComponentFixture<NgxTourStepComponent>;
+describe('GuideStepComponent', () => {
+  let component: GuideStepComponent;
+  let fixture: ComponentFixture<GuideStepComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NgxTourStepComponent ]
+      declarations: [ GuideStepComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NgxTourStepComponent);
+    fixture = TestBed.createComponent(GuideStepComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
