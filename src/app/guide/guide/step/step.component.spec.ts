@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { WelcomeGuideComponent } from './welcome-guide.component';
+import { StepComponent } from './step.component';
 
-describe('WelcomeGuideComponent', () => {
-  let component: WelcomeGuideComponent;
-  let fixture: ComponentFixture<WelcomeGuideComponent>;
+describe('StepComponent', () => {
+  let component: StepComponent;
+  let fixture: ComponentFixture<StepComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ WelcomeGuideComponent ]
+      declarations: [ StepComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(WelcomeGuideComponent);
+    fixture = TestBed.createComponent(StepComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

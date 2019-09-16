@@ -1,3 +1,4 @@
+import { GuideService } from './guide/guide.service';
 import { Component } from '@angular/core';
 
 @Component({
@@ -8,7 +9,9 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'ng-app';
 
-  constructor() {}
+  constructor(private guideService: GuideService) {}
 
-  showTour() {}
+  showTour() {
+    this.guideService.start('welcomeGuideService');
+  }
 }

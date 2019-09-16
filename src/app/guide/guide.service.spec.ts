@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { GuidesService } from './guides.service';
+import { GuideService } from './guide.service';
 
-describe('GuidesService', () => {
+describe('GuideService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: GuidesService = TestBed.get(GuidesService);
+    const service: GuideService = TestBed.get(GuideService);
     expect(service).toBeTruthy();
   });
 });
