@@ -9,6 +9,7 @@ import { WelcomeGuideService } from './lv-guides/welcome-guide/welcome-guide.ser
 import { TestComponent } from './components/test/test.component';
 import { Test1Component } from './components/test1/test1.component';
 import { Test2Component } from './components/test2/test2.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,7 @@ import { Test2Component } from './components/test2/test2.component';
     Test1Component,
     Test2Component
   ],
-  imports: [CommonModule],
+  imports: [CommonModule, BrowserAnimationsModule],
   exports: [GuideComponent],
   entryComponents: [
     GuideComponent,

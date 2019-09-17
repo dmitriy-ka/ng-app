@@ -10,9 +10,7 @@ export class TestComponent implements OnInit, OnDestroy {
 
   constructor() {}
 
-  ngOnInit() {
-    console.log('================== ngOnInit', this);
-  }
+  ngOnInit() {}
 
   ngOnDestroy() {}
 }

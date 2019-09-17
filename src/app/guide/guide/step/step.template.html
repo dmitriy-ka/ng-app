@@ -1,6 +1,8 @@
-<div class="modal-header">
-  <lv-content-tpl [contentTpl]="step?.title"></lv-content-tpl>
-</div>
-<div class="modal-body">
-  <lv-content-tpl [contentTpl]="step?.content"></lv-content-tpl>
+<div *ngIf="currentStepVisible" [@slideInOut]>
+  <div class="modal-header">
+    <lv-content-tpl [contentTpl]="step?.title"></lv-content-tpl>
+  </div>
+  <div class="modal-body">
+    <lv-content-tpl [contentTpl]="step?.content"></lv-content-tpl>
+  </div>
 </div>

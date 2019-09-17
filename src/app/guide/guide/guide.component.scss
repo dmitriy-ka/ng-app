@@ -33,15 +33,19 @@ lv-guide {
   width: 100vw;
   height: 100vh;
   background-color: #000;
-  opacity: .5;
+  opacity: 0.5;
 
   &.fade {
-    opacity: .8 !important;
+    opacity: 0.8 !important;
   }
 
   &.show {
     display: block;
   }
+}
+
+.modal-content {
+  overflow: hidden;
 }
 
 .modal-header {
