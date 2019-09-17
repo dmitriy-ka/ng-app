@@ -1,0 +1,49 @@
+lv-guide {
+  display: block;
+}
+
+.modal {
+  display: none;
+
+  &.show {
+    display: block;
+  }
+}
+
+.modal-dialog {
+  position: fixed;
+  left: 50px;
+  top: 50px;
+  z-index: 1000;
+  display: none;
+  width: 300px;
+  min-height: 300px;
+
+  &.show {
+    display: block;
+  }
+}
+
+.modal-backdrop {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999 !important;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000;
+  opacity: .5;
+
+  &.fade {
+    opacity: .8 !important;
+  }
+
+  &.show {
+    display: block;
+  }
+}
+
+.modal-header {
+  margin-top: 0 !important;
+}

@@ -6,7 +6,5 @@ import { Injectable } from '@angular/core';
 export class AppService {
   constructor() {}
 
-  hello(text?) {
-    console.log(`============ APPSERVICE HELLO ${text}`);
-  }
+  hello(text?) {}
 }

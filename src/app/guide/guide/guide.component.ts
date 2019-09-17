@@ -1,23 +1,28 @@
-import { Subject } from 'rxjs';
-import { GuideService } from './../guide.service';
 import {
   Component,
-  OnInit,
-  OnDestroy,
-  ViewChild,
   ElementRef,
-  Renderer2
+  Input,
+  OnDestroy,
+  OnInit,
+  Renderer2,
+  ViewChild
 } from '@angular/core';
-import { GuideConfig, StepConfig } from '../@types/guide.config';
-import { takeUntil, filter } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { filter, takeUntil } from 'rxjs/operators';
+import { get as _get } from 'lodash';
+import { StepConfig, GuideConfig } from '../@types/guide.config';
+import { GuideService } from '../guide.service';
 
 @Component({
-  selector: 'app-guide',
-  templateUrl: './guide.component.html',
+  selector: 'lv-guide',
+  templateUrl: './guide.template.html',
   styleUrls: ['./guide.component.scss']
 })
 export class GuideComponent implements OnInit, OnDestroy {
   private onDestroy: Subject<void> = new Subject();
+
+  @Input() user: any;
+  @Input() isAuthenticated: boolean;
 
   @ViewChild('modal') modal: ElementRef;
 
@@ -25,6 +30,25 @@ export class GuideComponent implements OnInit, OnDestroy {
   guide: GuideConfig;
   currentStep: StepConfig;
   stepChangeInProgress = false;
+
+  get currentStepIndex(): number {
+    if (_get(this.guide, 'steps') && this.currentStep) {
+      return this.guide.steps.indexOf(this.currentStep);
+    }
+    return -1;
+  }
+
+  get isLastStep(): boolean {
+    return (
+      this.guide &&
+      this.guide.steps &&
+      this.guide.steps.length === this.currentStepIndex + 1
+    );
+  }
+
+  get isFirstStep(): boolean {
+    return this.currentStepIndex === 0;
+  }
 
   constructor(
     private guideService: GuideService,
@@ -35,11 +59,14 @@ export class GuideComponent implements OnInit, OnDestroy {
     this.guideService
       .getCurrentGuide()
       .pipe(
-        filter(guide => Boolean(guide)),
+        filter((guide: GuideConfig | null) => {
+          if (!guide) this.clearGuide();
+          return Boolean(guide);
+        }),
         takeUntil(this.onDestroy)
       )
       .subscribe(guide => {
-        this.startGuide(guide);
+        this.startGuide(guide as GuideConfig);
       });
   }
 
@@ -48,44 +75,98 @@ export class GuideComponent implements OnInit, OnDestroy {
     this.onDestroy.complete();
   }
 
-  async prev() {
-    if (this.stepChangeInProgress) {
-      return;
-    }
-  }
+  async prevStep() {
+    const prevStep = this.guide.steps[this.currentStepIndex - 1];
 
-  async next() {
     if (this.stepChangeInProgress) {
       return;
     }
     this.stepChangeInProgress = true;
-    if (typeof this.currentStep.onNext === 'function') {
-      await this.currentStep.onNext();
+
+    if (prevStep) {
+      await this.onStartStep(prevStep);
+      this.currentStep = prevStep;
     }
+
+    this.stepChangeInProgress = false;
   }
 
-  async close() {}
+  async nextStep() {
+    const nextStep = this.guide.steps[this.currentStepIndex + 1];
 
-  async finish() {}
+    if (this.stepChangeInProgress) {
+      return;
+    }
+    this.stepChangeInProgress = true;
+
+    await this.onFinishStep(this.currentStep);
+    if (nextStep) {
+      await this.onStartStep(nextStep);
+      this.currentStep = nextStep;
+    } else {
+      await this.onFinishGuide(this.guide);
+      this.clearGuide();
+    }
+    this.stepChangeInProgress = false;
+  }
+
+  async closeGuide() {
+    await this.onCloseGuide(this.guide);
+    this.clearGuide();
+  }
 
   private async startGuide(guide: GuideConfig) {
     this.guide = guide;
-    this.currentStep = guide.steps[0];
-    this.setPosition();
-    this.showGuide();
+    this.currentStep = this.guide.steps[0];
+    await this.onStartGuide(this.guide);
+    await this.onStartStep(this.guide.steps[0]);
+    this.setStepPosition();
+    this.guideVisible = true;
+  }
+
+  private clearGuide() {
+    this.guideVisible = false;
+    this.guide = null;
+    this.currentStep = null;
+  }
+
+  private async onStartGuide(guide: GuideConfig): Promise<any> {
     if (typeof guide.onOpen === 'function') {
       await guide.onOpen();
     }
-    this.currentStep = this.guide.steps[0];
+    return Promise.resolve();
   }
 
-  private setPosition() {
+  private async onCloseGuide(guide: GuideConfig): Promise<any> {
+    if (typeof guide.onClose === 'function') {
+      return await guide.onClose();
+    }
+    return Promise.resolve();
+  }
+
+  private async onFinishGuide(guide: GuideConfig): Promise<any> {
+    if (typeof guide.onFinish === 'function') {
+      return await guide.onFinish();
+    }
+    return Promise.resolve();
+  }
+
+  private async onStartStep(step: StepConfig): Promise<any> {
+    if (typeof step.onStart === 'function') {
+      return await step.onStart();
+    }
+    return Promise.resolve();
+  }
+
+  private async onFinishStep(step: StepConfig): Promise<any> {
+    this.currentStep = step;
+    if (typeof step.onFinish === 'function') {
+      return await step.onFinish();
+    }
+    return Promise.resolve();
+  }
+
+  private setStepPosition() {
     // TODO: set position depend on anchor element
-  }
-
-  private showGuide() {
-    this.guideVisible = true;
-    this.renderer.setStyle(this.modal.nativeElement, 'display', 'block');
-    this.renderer.addClass(this.modal.nativeElement, 'show');
   }
 }

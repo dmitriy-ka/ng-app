@@ -1,0 +1,11 @@
+<ng-container [ngSwitch]="contentTpl?.type">
+  <span *ngSwitchCase="'translateKey'">{{ contentTpl.content }}</span>
+
+  <div *ngSwitchCase="'html'">
+    <span [innerHTML]="contentTpl?.content"></span>
+  </div>
+
+  <span *ngSwitchDefault>Default</span>
+</ng-container>
+
+<template #componentHost></template>

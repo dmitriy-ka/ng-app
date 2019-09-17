@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+
 export interface GuideConfig {
   name: string;
   steps: StepConfig[];
@@ -7,18 +8,27 @@ export interface GuideConfig {
   onFinish?: () => Promise<any>;
 }
 
-export class StepConfig {
-  index: number;
+export interface StepConfig {
   anchorElement: string;
-  stepType: string;
-  title?: string;
-  content?: string;
+  stepType: StepType;
+  title: ContentTpl;
+  content: ContentTpl;
+  titleTpl?: string;
+  contentTpl?: string;
   component?: Component;
   enableBackdrop: boolean;
   placement: string;
   prevBtnTitle?: string;
   nextBtnTitle?: string;
   endBtnTitle?: string;
-  onNext?: () => Promise<any>;
-  onPrev?: () => Promise<any>;
+  onStart?: () => Promise<any>;
+  onFinish?: () => Promise<any>;
 }
+
+export interface ContentTpl {
+  type?: 'html' | 'translateKey' | 'component';
+  content?: string | Component;
+  translateKey?: string; // use with type = 'translateKey'
+}
+
+export type StepType = 'text' | 'component';

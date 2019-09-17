@@ -17,7 +17,7 @@ import { StepConfig } from '../../@types/guide.config';
   templateUrl: './step.template.html',
   styleUrls: ['./step.component.scss']
 })
-export class StepComponent implements OnInit, OnChanges, OnDestroy {
+export class DefaultStepComponent implements OnInit, OnChanges, OnDestroy {
   private onDestroy: Subject<void> = new Subject();
 
   currentStep: StepConfig;

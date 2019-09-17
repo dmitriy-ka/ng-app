@@ -1,0 +1,31 @@
+<div
+  class="modal-dialog"
+  role="document"
+  #modal
+  [ngClass]="{ show: guideVisible }"
+>
+  <div class="modal-content">
+    <lv-guide-step [step]="currentStep"></lv-guide-step>
+
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-secondary"
+        *ngIf="!isFirstStep"
+        (click)="prevStep()"
+      >
+        Prev
+      </button>
+      <button type="button" class="btn btn-primary" (click)="nextStep()">
+        {{ isLastStep ? 'Finish' : 'Next' }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<div
+  #modalBackdrop
+  class="modal-backdrop fade"
+  [ngClass]="{ show: guideVisible }"
+  (click)="closeGuide()"
+></div>
